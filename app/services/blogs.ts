@@ -13,10 +13,16 @@ export const getBlogs = () => {
 
 export const getBlogById = (id: number) => {
   const blog = blogs.find(value => value.id === id) || undefined
-  console.log(id, blog)
   return blog
 }
 
 export const addBlog = (title: string, author: string, url: string, likes: number) => {
   blogs.push({ id: nextId++, title, author, url, likes })
+}
+
+export const like = (id: number) => {
+  const blog = blogs.find(value => value.id === id) || undefined
+  // console.log("like", id, blog)
+  if (blog) blog.likes++
+  // console.log("like", id, blog)
 }
