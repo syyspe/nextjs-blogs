@@ -8,7 +8,11 @@ const blogs = [
 let nextId = 4
 
 export const getBlogs = () => {
-  return blogs
+  return blogs.sort((a, b) => {
+    if (a.likes - b.likes === 0) return 0
+    if (a.likes > b.likes) return -1
+    return 1
+  })
 }
 
 export const getBlogById = (id: number) => {
