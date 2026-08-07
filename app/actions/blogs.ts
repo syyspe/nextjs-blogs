@@ -5,7 +5,15 @@ import { redirect } from "next/navigation"
 import { addBlog, like } from "../services/blogs"
 import { auth } from "../auth"
 
-export const createBlog = async (formData: FormData) => {
+const validateInputLength = (
+  inputName: string, inputString: string, requiredLength: number): string => {
+  if (!inputString || inputString.length < requiredLength) {
+    return `${inputName} must be at least ${requiredLength} characters.`
+  }
+  return ""
+}
+
+export const createBlog = async (prevState: {error: object, values: object}, formData: FormData) => {
   const session = await auth()
   if (!session) {
     redirect("/login")
@@ -14,6 +22,16 @@ export const createBlog = async (formData: FormData) => {
   const title = formData.get("title") as string
   const author = formData.get("author") as string
   const url = formData.get("url") as string
+
+  let errors: Record<string, string> = {}
+  errors.title = validateInputLength("Title", title, 5)
+  errors.author = validateInputLength("Author", author, 5)
+  errors.url = validateInputLength("URL", url, 5)
+  
+  if (Object.values(errors).some(v => v))  {
+    return {error: errors, values: {title, author, url}}
+  }
+
   const likes = Number(formData.get("likes"))
   await addBlog(title, author, url, likes)
   revalidatePath("/blogs")
