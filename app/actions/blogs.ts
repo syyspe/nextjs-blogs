@@ -4,14 +4,7 @@ import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 import { addBlog, like } from "../services/blogs"
 import { auth } from "../auth"
-
-const validateInputLength = (
-  inputName: string, inputString: string, requiredLength: number): string => {
-  if (!inputString || inputString.length < requiredLength) {
-    return `${inputName} must be at least ${requiredLength} characters.`
-  }
-  return ""
-}
+import { validateInputLength } from "../helpers"
 
 export const createBlog = async (prevState: {error: object, values: object}, formData: FormData) => {
   const session = await auth()
