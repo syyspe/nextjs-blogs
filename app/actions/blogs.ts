@@ -6,7 +6,7 @@ import { addBlog, like } from "../services/blogs"
 import { auth } from "../auth"
 import { validateInputLength } from "../helpers"
 
-export const createBlog = async (prevState: {error: object, values: object}, formData: FormData) => {
+export const createBlog = async (prevState: {error: object, success: boolean, values: object}, formData: FormData) => {
   const session = await auth()
   if (!session) {
     redirect("/login")
@@ -22,13 +22,14 @@ export const createBlog = async (prevState: {error: object, values: object}, for
   errors.url = validateInputLength("URL", url, 5)
   
   if (Object.values(errors).some(v => v))  {
-    return {error: errors, values: {title, author, url}}
+    return {error: errors, success: false, values: {title, author, url}}
   }
 
   const likes = Number(formData.get("likes"))
   await addBlog(title, author, url, likes)
   revalidatePath("/blogs")
-  redirect("/blogs")
+  return {error: {}, success: true, values: {title,  author, url}}
+  // redirect("/blogs")
 }
 
 export const likeBlog = async (formData: FormData) => {

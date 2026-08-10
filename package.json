@@ -14,11 +14,12 @@
     "drizzle-orm": "^0.45.2",
     "next": "^16.3.0",
     "next-auth": "^5.0.0-beta.32",
+    "postcss": "^8.5.26",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
+    "@tailwindcss/postcss": "^4.3.3",
     "@types/bcryptjs": "^3.0.0",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -28,7 +29,13 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.12",
     "postgres": "^3.4.9",
-    "tailwindcss": "^4",
+    "tailwindcss": "^4.3.3",
     "typescript": "^5"
+  },
+  "allowScripts": {
+    "esbuild@0.18.20": true,
+    "esbuild@0.25.12": true,
+    "esbuild@0.28.1": true,
+    "unrs-resolver@1.12.2": true
   }
 }
