@@ -1,11 +1,14 @@
 "use server"
 
 import { redirect } from "next/navigation"
+import { revalidatePath } from "next/cache"
 import bcrypt from "bcryptjs"
 import { NeonDbError } from "@neondatabase/serverless"
+import { eq } from "drizzle-orm"
 import { db } from "../../db"
 import { users } from "../../db/schema"
 import { validateInputLength } from "../helpers"
+import { getCurrentUser } from "../services/session"
 
 export const registerUser = async (prevState: {error: object, values: object}, formData: FormData) => {
   const username = (formData.get("username") as string)?.trim()
@@ -14,7 +17,7 @@ export const registerUser = async (prevState: {error: object, values: object}, f
   const passwordConfirm = formData.get("passwordConfirm") as string
 
 
-  let errors: Record<string, string> = {}
+  const errors: Record<string, string> = {}
   errors.username = validateInputLength("Username", username, 4)
   errors.passwordLength = validateInputLength("Password", password, 4)
   errors.passwordMatch = password !== passwordConfirm ? "Passwords do not match" : ""
@@ -35,4 +38,18 @@ export const registerUser = async (prevState: {error: object, values: object}, f
   }
 
   redirect("/login")
+}
+
+export const generateToken = async () => {
+  const user = await getCurrentUser()
+  if (!user) {
+    redirect("/login")
+  }
+  const token = crypto.randomUUID()
+  try {
+    await db.update(users).set({ token }).where(eq(users.id, user.id))
+  } catch(err) {
+
+  }
+  revalidatePath("/me")
 }

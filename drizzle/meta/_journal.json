@@ -15,6 +15,20 @@
       "when": 1786009639765,
       "tag": "0001_big_azazel",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1786523881558,
+      "tag": "0002_premium_vermin",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1786524204221,
+      "tag": "0003_dizzy_pete_wisdom",
+      "breakpoints": true
     }
   ]
 }
