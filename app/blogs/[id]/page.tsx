@@ -12,9 +12,9 @@ const BlogPage = async ({ params, }: { params: Promise<{ id: string }> }) => {
   if (!blog) notFound()
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
-      <h2 className="text-2xl font-bold mb-4">{blog.title}</h2>
-      <p>Author: {" "}{blog.author}</p>
+    <div className="max-w-2xl mx-auto p-6" data-testid="blog-detail">
+      <h2 className="text-2xl font-bold mb-4" data-testid="blog-title">{blog.title}</h2>
+      <p data-testid="blog-author">Author: {" "}{blog.author}</p>
       <p>URL:{" "}<a href={blog.url} className="text-blue-600 hover:underline">{blog.url}</a></p>
       <p>Likes:{" "}{blog.likes}</p>
       <div className="flex items-center gap-2 mt-4">
@@ -24,7 +24,9 @@ const BlogPage = async ({ params, }: { params: Promise<{ id: string }> }) => {
         </form>
         <form action={addToReadingList}>
           <input type="hidden" name="id" value={blog.id} />
-          {user && blog.userId !== user.id ? (<SubmitButton text="Add to reading list" />) : (null)}
+          {user && blog.userId !== user.id ? (<SubmitButton 
+            text="Add to reading list" 
+            testId="add-to-reading-list-button" />) : (null)}
         </form>
       </div>
     </div>
