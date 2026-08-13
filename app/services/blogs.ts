@@ -36,10 +36,10 @@ export const addBlogToReadingList = async (blogId: number) => {
   await db.insert(readingList).values({ userId: user.id, blogId })
 }
 
-export const markBlogRead = async (blogId: number) => {
+export const markBlogRead = async (blogId: number, isRead: boolean = true) => {
   const user = await userOrError()
   await db.update(readingList)
-    .set({read: true})
+    .set({read: isRead})
     .where(and(eq(readingList.blogId, blogId), eq(readingList.userId, user.id)))
 }
 

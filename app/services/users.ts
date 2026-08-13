@@ -1,4 +1,4 @@
-import { eq, } from "drizzle-orm"
+import { eq,and } from "drizzle-orm"
 import { db, } from "../../db"
 import { readingList, users, } from "../../db/schema"
 
@@ -35,4 +35,17 @@ export const getUserWithReadingList = async (id: number) => {
       }
     }
   })
+}
+
+export const getUsersReadingList = async (id: number, read: boolean) => {
+  const rl =  await db.query.users.findFirst({
+    where: eq(users.id, id),
+    with: {
+      readingList: {
+        where: and(eq(readingList.userId, id), eq(readingList.read, read)),
+        with: { blog: true },
+      }
+    }
+  })
+  return rl?.readingList
 }

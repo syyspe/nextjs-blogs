@@ -54,7 +54,9 @@ export const addToReadingList = async (formData: FormData) => {
 export const markRead = async (formData: FormData) => {
   await sessionOrLogin()
   const blogId = Number(formData.get("blogId"))
-  await markBlogRead(blogId)
+  const isRead = Boolean(formData.get("isRead") !== "false")
+  await markBlogRead(blogId, isRead)
+  revalidatePath("/me")
 }
 
 const sessionOrLogin = async () => {
