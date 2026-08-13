@@ -1,4 +1,6 @@
-import { eq,and } from "drizzle-orm"
+import bcrypt from "bcryptjs"
+import { NeonDbError } from "@neondatabase/serverless"
+import { eq, and } from "drizzle-orm"
 import { db, } from "../../db"
 import { readingList, users, } from "../../db/schema"
 
@@ -38,7 +40,7 @@ export const getUserWithReadingList = async (id: number) => {
 }
 
 export const getUsersReadingList = async (id: number, read: boolean) => {
-  const rl =  await db.query.users.findFirst({
+  const rl = await db.query.users.findFirst({
     where: eq(users.id, id),
     with: {
       readingList: {
@@ -48,4 +50,28 @@ export const getUsersReadingList = async (id: number, read: boolean) => {
     }
   })
   return rl?.readingList
+}
+
+export const createTestUser = async (name: string, username: string, password: string) => {
+  const res = {
+    success: true,
+    error: "",
+    status: 200,
+  }
+
+  try {
+    const passwordHash = await bcrypt.hash(password, 10)
+    await db.insert(users).values({ username, name, passwordHash })
+  } catch (err) {
+    if (err instanceof Error && err.cause instanceof NeonDbError && err.cause.code === "23505") {
+      res.error = "Username already exists"
+      res.success = false
+      res.status = 403
+    } else {
+      res.error = err instanceof Error ? err.message : String(err)
+      res.success = false
+      res.status = 500
+    }
+  }
+  return res
 }
