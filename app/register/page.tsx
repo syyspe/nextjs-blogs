@@ -16,14 +16,14 @@ const RegisterPage = () => {
       <h2 className="text-2xl font-bold mb-4">Register</h2>
       <form action={formAction}>
         <LabeledTextInput label="Username" name="username" default={state.values.username} />
-        {state.error?.username && <ErrorHelp message={state.error.username} />}
+        {state.error?.username && <ErrorHelp message={state.error.username} testId="username-error" />}
         <LabeledTextInput label="Name" name="name" default={state.values.name} />
         {state.error?.name && <ErrorHelp message={state.error.username} />}
         <LabeledTextInput type="password" label="Password" name="password" default={state.values.password} /> 
         {state.error?.passwordLength && <ErrorHelp message={state.error.passwordLength} />}
         <LabeledTextInput type="password" label="Confirm Password" name="passwordConfirm" default={state.values.passwordConfirm} />
-        {state.error?.passwordMatch && <ErrorHelp message={state.error.passwordMatch} />}
-        <SubmitButton text="Register" />
+        {state.error?.passwordMatch && <ErrorHelp message={state.error.passwordMatch} testId="passwordConfirm-error"/>}
+        <SubmitButton text="Register" testId="register-button"/>
       </form>
     </div>
   )

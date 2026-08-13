@@ -1,10 +1,11 @@
 type ErrorHelpProps = {
-    message: string
+    message: string,
+    testId?: string,
 }
 
 const ErrorHelp = (props: ErrorHelpProps) => {
   return (
-    <div className="text-red-400">{props.message}</div>
+    <div data-testid={props.testId} className="text-red-400">{props.message}</div>
   )
 }
 

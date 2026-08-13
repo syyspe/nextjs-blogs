@@ -34,7 +34,7 @@ const NewBlog = () => {
         {state.error?.author && <ErrorHelp message={state.error.author} />}
         <LabeledTextInput label="URL" name="url" default={state.values?.url} />
         {state.error?.url && <ErrorHelp message={state.error.url} />}
-        <SubmitButton text="Create" />
+        <SubmitButton text="Create" testId="create-blog-button"/>
       </form>
     </div>
   )

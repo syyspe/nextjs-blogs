@@ -3,6 +3,7 @@ type LabeledTextInputProps = {
   label: string,
   name: string,
   default: string,
+  testId?: string,
 }
 
 const LabeledTextInput = (props: LabeledTextInputProps) => {
@@ -16,7 +17,8 @@ const LabeledTextInput = (props: LabeledTextInputProps) => {
               <input 
                 type={props.type ? props.type : "text"} 
                 name={props.name} 
-                defaultValue={props.default} 
+                defaultValue={props.default}
+                data-testid={props.testId} 
                 className="block border rounded pl-1 bg-white text-base font-normal text-gray-900" />
             </label>
           </div>
