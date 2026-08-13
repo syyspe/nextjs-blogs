@@ -1,9 +1,11 @@
+import Homepage from "./homepage.md"
 
-export default function Home() {
+const Home = () => {
   return (
-    <div className="max-w-2xl mx-auto p-6">
-      <h2 className="text-2xl font-bold mb-4">Blogs app</h2>
-      <p>View, like and add blogs</p>
+    <div className="markdown max-w-2xl mx-auto p-6">
+      <Homepage />
     </div>
   )
 }
+
+export default Home
