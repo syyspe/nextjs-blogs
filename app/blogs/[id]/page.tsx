@@ -17,7 +17,7 @@ const BlogPage = async ({ params, }: { params: Promise<{ id: string }> }) => {
       <p>Author: {" "}{blog.author}</p>
       <p>URL:{" "}<a href={blog.url} className="text-blue-600 hover:underline">{blog.url}</a></p>
       <p>Likes:{" "}{blog.likes}</p>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 mt-4">
         <form action={likeBlog}>
           <input type="hidden" name="id" value={blog.id} />
           <SubmitButton text="Like" />

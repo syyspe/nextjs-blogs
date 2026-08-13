@@ -20,7 +20,7 @@ const Blogs = async ( {searchParams,}: {searchParams: Promise<{filter: string}>}
             <Link href={`/blogs/${blog.id}`} className="text-blue-600 hover:underline">
               <strong>{blog.title}</strong>
             </Link>
-            {` by: ${blog.author}`} {blog.likes && <div>Liked {" "}{blog.likes} times</div>}
+            {` by: ${blog.author}`} <div>Liked {" "}{blog.likes} times</div>
           </li>
         ))}
       </ul>
