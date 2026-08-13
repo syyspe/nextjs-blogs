@@ -1,5 +1,7 @@
-import { redirect } from "next/navigation"
+import { redirect, } from "next/navigation"
+import Link from "next/link"
 import { getCurrentUser } from "../services/session"
+import { getUserWithReadingList } from "../services/users"
 import { generateToken } from "../actions/users"
 import SubmitButton from "../components/SubmitButton"
 
@@ -8,6 +10,8 @@ const UserProfile = async () => {
   if (!user) {
     redirect("/login")
   }
+
+  const userWithReadingList = await getUserWithReadingList(user.id)
 
   return (
     <div className="max-w-2xl mx-auto p-6">
@@ -21,6 +25,15 @@ const UserProfile = async () => {
       <form action={generateToken}>
         <SubmitButton text="Generate new token" />
       </form>
+      <div className="border-t border-gray-800 my-4"></div>
+      <h2 className="text-2xl font-bold mb-4">Reading List</h2>
+      <ul>
+        {userWithReadingList?.readingList.map(item => (
+          <li key={item.id}>
+            <Link href={`/blogs/${item.blog.id}`}>{item.blog.title}</Link>
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }
