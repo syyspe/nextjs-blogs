@@ -460,8 +460,8 @@ test.describe("Blog Application", () => {
       // Generate new token without reloading
       await page.getByTestId("generate-token-button").click()
 
-      // Wait for token to potentially change
-      await page.waitForTimeout(500)
+      // Wait for the token text to actually change (server action + revalidate)
+      await expect(page.getByTestId("api-token")).not.toHaveText(firstToken!)
       const secondToken = await page.getByTestId("api-token").textContent()
 
       // Tokens should be different
